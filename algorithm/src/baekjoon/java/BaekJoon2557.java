@@ -1,4 +1,4 @@
-package baekjoon;
+package baekjoon.java;
 
 public class BaekJoon2557 {
 
