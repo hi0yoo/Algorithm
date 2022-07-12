@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-// TODO 수정
+// TODO 다시 풀기
 public class BaekJoon1931 {
 
     public static void main(String[] args) throws IOException {
