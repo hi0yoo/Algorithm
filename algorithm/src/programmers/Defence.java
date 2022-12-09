@@ -26,13 +26,12 @@ public class Defence {
 
         int count = 0;
         int remain = n;
-        int point = 0;
+        int i;
         PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((o1, o2) -> -(o1 - o2));
-        while (remain >= 0 && point < enemy.length) {
-
-            int tmp = enemy[point];
-            priorityQueue.add(tmp);
-            remain = remain - tmp;
+        for (i = 0; i < enemy.length; i++) {
+            int current = enemy[i];
+            priorityQueue.add(current);
+            remain -= current;
 
             if (remain < 0) {
                 if (count < k) {
@@ -42,11 +41,8 @@ public class Defence {
                     break;
                 }
             }
-
-            point++;
         }
-
-        answer = point;
+        answer = i;
 
         return answer;
     }
