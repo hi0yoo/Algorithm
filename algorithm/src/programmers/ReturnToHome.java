@@ -37,6 +37,7 @@ public class ReturnToHome {
             list[end].add(new Node(start, 1));
         }
 
+        // 최단 거리 테이블 생성 및 초기화
         int[] shortest = new int[n + 1];
         for (int i = 0; i <= n; i++) {
             shortest[i] = INF;
@@ -55,11 +56,14 @@ public class ReturnToHome {
         while (!priorityQueue.isEmpty()) {
             Node poll = priorityQueue.poll();
             int now = poll.node;
+
             if (!visited[now]) {
                 visited[now] = true;
+
                 int size = list[now].size();
                 for (int i = 0; i < size; i++) {
                     Node node = list[now].get(i);
+
                     int pathNodeCost = node.cost;
                     if (now != node.node && pathNodeCost != INF) {
                         int fullCost = poll.cost + pathNodeCost;
