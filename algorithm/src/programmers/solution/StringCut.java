@@ -1,4 +1,4 @@
-package programmers;
+package programmers.solution;
 
 public class StringCut {
 

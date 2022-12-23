@@ -1,4 +1,4 @@
-package programmers;
+package programmers.solution;
 
 // 점찍기
 public class Points {
