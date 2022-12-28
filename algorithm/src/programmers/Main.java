@@ -1,15 +1,18 @@
 package programmers;
 
-import programmers.solution.DeliveryBox;
-import programmers.solution.DividePower;
-import programmers.solution.Fatigue;
-import programmers.solution.TableHashFunction;
+import programmers.solution.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        DeliveryBox deliveryBox = new DeliveryBox();
-        int[] order = {1, 2, 3, 4, 5};
-        System.out.println(deliveryBox.solution(order));
+        GameMapShortestPath gameMapShortestPath = new GameMapShortestPath();
+        int[][] maps = {
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 0, 1},
+                {1, 0, 1, 1, 1},
+                {1, 1, 1, 0, 1},
+                {0, 0, 0, 0, 1}
+        };
+        System.out.println(gameMapShortestPath.solution(maps));
     }
 }
