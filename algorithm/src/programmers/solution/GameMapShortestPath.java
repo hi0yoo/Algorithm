@@ -1,6 +1,5 @@
 package programmers.solution;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -27,84 +26,49 @@ public class GameMapShortestPath {
     };
     -> -1
      */
+    // 맵 세로 크기
     private static int rowSize;
+    // 맵 가로 크기
     private static int colSize;
-    private static int[][] map;
-    private static Queue<Node> queue = new LinkedList<>();
+    // {x, y} 형식으로 큐에 삽입
+    private static Queue<int[]> queue = new LinkedList<>();
 
     public int solution(int[][] maps) {
         int answer = 0;
 
         rowSize = maps.length;
         colSize = maps[0].length;
-        map = new int[rowSize + 1][colSize + 1];
-        for (int i = 0; i < rowSize; i++) {
-            for (int j = 0; j < colSize; j++) {
-                map[i + 1][j + 1] = maps[i][j];
-            }
-        }
 
-        Node start = new Node(1, 1);
-        queue.add(start);
-        map[start.y][start.x] = 0;
+        // 1, 1 위치에서 시작
+        visit(0, 0, maps);
 
         while (!queue.isEmpty()) {
-            int currentSize = queue.size();
-            while (currentSize > 0) {
-                Node poll = queue.poll();
-                if (poll.x == colSize && poll.y == rowSize) {
-                    return answer + 1;
-                }
-                if (poll.canLeft()) {
-                    visit(poll.y, poll.x - 1);
-                }
-                if (poll.canRight()) {
-                    visit(poll.y, poll.x + 1);
-                }
-                if (poll.canTop()) {
-                    visit(poll.y - 1, poll.x);
-                }
-                if (poll.canBottom()) {
-                    visit(poll.y + 1, poll.x);
-                }
-                currentSize--;
-            }
+            // 반복마다 이동한 횟수 추가
             answer++;
+            int currentSize = queue.size();
+            // 현재 큐에 있는 수 만큼 반복
+            while (currentSize > 0) {
+                int[] poll = queue.poll();
+                currentSize--;
+                // 상대 진영에 도착했으면 리턴
+                if (poll[0] == colSize - 1 && poll[1] == rowSize - 1) return answer;
+
+                // 상하좌우 방문
+                visit(poll[0] - 1, poll[1], maps);
+                visit(poll[0] + 1, poll[1], maps);
+                visit(poll[0], poll[1] - 1, maps);
+                visit(poll[0], poll[1] + 1, maps);
+            }
         }
-        if (map[rowSize][colSize] == 1) {
-            return -1;
-        }
-        return answer;
+        // 리턴되지 않았으면 도착 불가능함.
+        return -1;
     }
 
-    private void visit(int y, int x) {
-        queue.add(new Node(x, y));
-        map[y][x] = 0;
-    }
-
-    private static class Node {
-        int x;
-        int y;
-
-        public Node(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public boolean canLeft() {
-            return x - 1 > 0 && map[y][x - 1] == 1;
-        }
-
-        public boolean canRight() {
-            return x + 1 <= colSize && map[y][x + 1] == 1;
-        }
-
-        public boolean canTop() {
-            return y - 1 > 0 && map[y - 1][x] == 1;
-        }
-
-        public boolean canBottom() {
-            return y + 1 <= rowSize && map[y + 1][x] == 1;
+    private void visit(int x, int y, int[][] maps) {
+        // 방문할 수 있는 곳이면 방문
+        if (x >= 0 && x < colSize && y >= 0 && y < rowSize && maps[y][x] == 1) {
+            queue.add(new int[]{x, y});
+            maps[y][x] = 0;
         }
     }
 }
