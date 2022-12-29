@@ -5,14 +5,8 @@ import programmers.solution.*;
 public class Main {
 
     public static void main(String[] args) {
-        GameMapShortestPath gameMapShortestPath = new GameMapShortestPath();
-        int[][] maps = {
-                {1, 0, 1, 1, 1},
-                {1, 0, 1, 0, 1},
-                {1, 0, 1, 1, 1},
-                {1, 1, 1, 0, 1},
-                {0, 0, 0, 0, 1}
-        };
-        System.out.println(gameMapShortestPath.solution(maps));
+        GoodSquare goodSquare = new GoodSquare();
+//        System.out.println(goodSquare.solution(100_000_000, 100_000_000));
+        System.out.println(goodSquare.solution(8, 12));
     }
 }
