@@ -49,49 +49,56 @@ class MagicElevator {
         var answer = 0
 
         var remainStorey = storey
-        // 자릿수 계산
-        var countNumbers = 1
-        var n = 10
-        while (storey / n > 0) {
-            n *= 10
-            countNumbers++
-        }
+        // 자릿수
+        val digitCount = remainStorey.toString().length
 
         // 자릿수 만큼 진행
-        for (i in 1 .. countNumbers) {
-            val number = getNumber(i, remainStorey)
-            if (number > 5) {
-                remainStorey += getMultipleDigitNumber(i, 10 - number)
-                answer += (10 - number)
-            } else if (number < 5) {
-                remainStorey -= getMultipleDigitNumber(i, number)
-                answer += number
-            } else {
-                // 다음 자릿수가 없으면 뺀다.
-                if (i + 1 > countNumbers) {
-                    remainStorey -= getMultipleDigitNumber(i, number)
-                    answer += number
+        for (i in 1 .. digitCount) {
+            // 10^(i-1)의 자릿수 값
+            val digitNum = getDigitNumberFrom(digitAt = i, num = remainStorey)
+            // 자릿수의 값이 5보다 크면 +10^(i-1) 버튼을 통해 올라간다.
+            if (digitNum > 5) {
+                remainStorey += makeDigitNumber(digit = i, num = 10 - digitNum)
+                answer += (10 - digitNum)
+            }
+            // 자릿수의 값이 5보다 작으면 -10^(i-1) 버튼을 통해 내려간다.
+            else if (digitNum < 5) {
+                remainStorey -= makeDigitNumber(digit = i, num = digitNum)
+                answer += digitNum
+            }
+            // 자릿수의 값이 5이면 다음 자릿수를 확인한다.
+            else {
+                // 다음 자릿수가 없으면 -10^(i-1) 버튼을 통해 내려간다.
+                if (i + 1 > digitCount) {
+                    remainStorey -= makeDigitNumber(digit = i, num = digitNum)
+                    answer += digitNum
                 } else {
                     // 다음 자릿수
-                    val nextNumber = getNumber(i + 1, remainStorey)
-                    if (nextNumber <= 4) {
-                        remainStorey -= getMultipleDigitNumber(i, number)
-                        answer += number
-                    } else {
-                        remainStorey += getMultipleDigitNumber(i, 10 - number)
-                        answer += (10 - number)
+                    val nextDigitNumber = getDigitNumberFrom(num = remainStorey, digitAt = i + 1)
+                    // 다음 자릿수가 4 이하이면 -10^(i-1) 버튼을 통해 내려간다.
+                    if (nextDigitNumber <= 4) {
+                        remainStorey -= makeDigitNumber(digit = i, num = digitNum)
+                        answer += digitNum
+                    }
+                    // 다음 자릿수가 5 이상이면 +10^(i-1) 버튼을 통해 내려간다.
+                    else {
+                        remainStorey += makeDigitNumber(digit = i, num = 10 - digitNum)
+                        answer += (10 - digitNum)
                     }
                 }
             }
         }
 
+        // 기존 storey 의 가장 큰 자릿수에서 자릿수가 하나 더 생겼을 경우
+        // ex) 9 -> 10이 된 경우, -10 버튼을 눌러줘야 한다.
         if (remainStorey != 0 && remainStorey % 10 == 0) answer++;
 
         return answer
     }
 
-    private fun getMultipleDigitNumber(i: Int, k: Int) = ((10).toDouble().pow(i - 1) * k).toInt()
+    // num * 10^(digit-1) 값 생성
+    private fun makeDigitNumber(digit: Int, num: Int) = ((10).toDouble().pow(digit - 1) * num).toInt()
 
-    // k번째 자릿수 값 꺼냄
-    private fun getNumber(k: Int, storey: Int): Int = ((storey / (10).toDouble().pow(k - 1)) % 10).toInt()
+    // num 에서 digitAt 번째 자릿수 값 꺼냄
+    private fun getDigitNumberFrom(num: Int, digitAt: Int): Int = ((num / (10).toDouble().pow(digitAt - 1)) % 10).toInt()
 }
