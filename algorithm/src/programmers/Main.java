@@ -5,7 +5,7 @@ import programmers.solution.*;
 public class Main {
 
     public static void main(String[] args) {
-        MagicElevator magicElevator = new MagicElevator();
-        System.out.println(magicElevator.solution(2554));
+        SinglePlay singlePlay = new SinglePlay();
+        System.out.println(singlePlay.solution(new int[]{2, 3, 4, 1}));
     }
 }
