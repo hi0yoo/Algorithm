@@ -61,9 +61,10 @@ class SinglePlay {
 
     fun dfs(idx: Int, cards: IntArray): Int {
         var count = 1
-        if (!visited[cards[idx] - 1]) {
-            visited[cards[idx] - 1] = true
-            count = dfs(cards[idx] - 1, cards) + 1
+        val nextBoxIdx = cards[idx] - 1
+        if (!visited[nextBoxIdx]) {
+            visited[nextBoxIdx] = true
+            count = dfs(nextBoxIdx, cards) + 1
         }
         return count
     }
