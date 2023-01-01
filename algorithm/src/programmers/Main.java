@@ -2,10 +2,12 @@ package programmers;
 
 import programmers.solution.*;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
-        SinglePlay singlePlay = new SinglePlay();
-        System.out.println(singlePlay.solution(new int[]{2, 3, 4, 1}));
+        TowerOfHanoi towerOfHanoi = new TowerOfHanoi();
+        System.out.println(Arrays.deepToString(towerOfHanoi.solution(2)));
     }
 }
