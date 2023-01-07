@@ -2,12 +2,11 @@ package programmers;
 
 import programmers.solution.*;
 
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {
-        TowerOfHanoi towerOfHanoi = new TowerOfHanoi();
-        System.out.println(Arrays.deepToString(towerOfHanoi.solution(2)));
+        ContinuousSubsequenceSumCount continuousSubsequenceSumCount = new ContinuousSubsequenceSumCount();
+        int[] arr = {7, 9, 1, 1, 4};
+        System.out.println(continuousSubsequenceSumCount.solution(arr));
     }
 }
