@@ -5,11 +5,11 @@ import java.util.Stack
 fun main() {
     val t = readln().toInt()
     for (i in 1..t) {
-        solution(readln())
+        getCount(readln())
     }
 }
 
-fun solution(s: String) {
+fun getCount(s: String) {
     val stack: Stack<Char> = Stack()
     val len = s.length
 

@@ -6,11 +6,11 @@ var pointer: Int = -1
 fun main() {
     val n = readln().toInt()
     for (i in 1 .. n) {
-        solution()
+        getCount()
     }
 }
 
-fun solution() {
+fun getCount() {
     val input = readln()
     doSomething(input)
 }
