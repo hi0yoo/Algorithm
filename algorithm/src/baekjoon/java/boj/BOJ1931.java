@@ -1,93 +1,33 @@
 package baekjoon.java.boj;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
-// TODO 다시 풀기
 public class BOJ1931 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-
-        Meeting[] a = new Meeting[n];
-        StringTokenizer st = null;
-        int max = 0;
+        int[][] arr = new int[n][2];
         for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
-            int startTime = Integer.parseInt(st.nextToken());
-            int endTime = Integer.parseInt(st.nextToken());
-            if (max < endTime) {
-                max = endTime;
-            }
-            a[i] = new Meeting(startTime, endTime);
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            arr[i][0] = Integer.parseInt(st.nextToken());
+            arr[i][1] = Integer.parseInt(st.nextToken());
         }
 
-//        Arrays.sort(a, (o1, o2) -> {
-//            int length1 = o1.getLength();
-//            int length2 = o2.getLength();
-//            if (length1 == length2) {
-//                return o1.getStartTime() - o2.getStartTime();
-//            }
-//            return length1 - length2;
-//        });
+        // 종료 시간을 기준으로 정렬
+        Arrays.sort(arr, (o1, o2) -> o1[1] == o2[1] ? o1[0] - o2[0] : o1[1] - o2[1]);
 
-        Arrays.sort(a,
-                Comparator.comparing(Meeting::getLength)
-                        .thenComparing(Meeting::getStartTime));
-
-        int result = 0;
-        boolean[] t = new boolean[max];
-        for (int i = 0; i < n; i++) {
-            boolean q = false;
-            int startTime = a[i].startTime;
-            int endTime = a[i].endTime;
-            if (endTime - startTime == 0 || endTime - startTime == 1) {
-                t[startTime] = true;
-                t[endTime] = true;
-                result++;
-            } else {
-                for (int j = startTime + 1; j < endTime; j++) {
-                    if (t[j]) {
-                        break;
-                    }
-                    if (j == endTime - 1) {
-                        q = true;
-                        result++;
-                    }
-                }
-
-                if (q) {
-                    for (int j = startTime; j < endTime; j++) {
-                        t[j] = true;
-                    }
-                }
+        // 가장 빨리 끝나는 것 선택 : idx=0
+        int currentIdx = 0;
+        int answer = 1;
+        for (int i = 1; i < n; i++) {
+            if (arr[i][0] >= arr[currentIdx][1]) {
+                currentIdx = i;
+                answer++;
             }
         }
-        System.out.println(result);
-    }
 
-    static class Meeting {
-        public int startTime;
-        public int endTime;
-
-        public int getStartTime() {
-            return startTime;
-        }
-
-        public int getEndTime() {
-            return endTime;
-        }
-
-        public int getLength() {
-            return this.endTime - this.startTime;
-        }
-
-        public Meeting(int startTime, int endTime) {
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
+        System.out.println(answer);
     }
 }
