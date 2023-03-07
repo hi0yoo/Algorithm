@@ -3,6 +3,7 @@ package baekjoon.java.boj;
 import java.io.*;
 import java.util.*;
 
+// TODO 다시 풀기
 public class BOJ12865 {
 
     public static void main(String[] args) throws Exception {
