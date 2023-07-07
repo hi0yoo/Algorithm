@@ -1,1 +1,3 @@
-/algorithm/out/**
+/out/**
+.idea
+*.iml
